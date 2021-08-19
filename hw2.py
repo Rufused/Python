@@ -4,6 +4,15 @@ st = 'as 23 fdfdg544'
 print([i for i in st if i.isdigit()])
 
 # 2
+import re
+
+st = 'as 23 fdfdg544 34'
+st = re.sub('[a-z]', '', st)
+print(st)
+
+
+# OR
+
 st = 'as 23 fdfdg544 34'
 st = [i for i in st.split() if not i.isalpha()]
 for i in st:
@@ -21,7 +30,9 @@ print(st)
 # lists
 # 1
 greeting = 'Hello, world'
-print(list(greeting.upper()))
+# print(list(greeting.upper()))
+
+print([i.upper() for i in greeting])
 
 # 2
 print([num ** 2 for num in range(50) if num % 2 or not num])  # not num эквивалент num == 0
