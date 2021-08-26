@@ -39,26 +39,23 @@ summ = lambda x: x + int(f'{x}{x}') + int(f'{x}{x}{x}')
 print(summ(7))
 
 
-#
-# def persistence(num):
-#     per = 0
-#     mul = 1
-#     while num > 1:
-#         print(per, mul, num,'--------')
-#         per += 1
-#         mul = mul * (num % 10)
-#         num = num // 10
-#         if not num and mul:
-#             num, mul = mul, 1
-#
-#         #     print('shit')
-#         print(per,  num,mul,'--------')
-#     return per
-# print(persistence(999))
 
-# def persistence(num):
-#     per = 0
-#     return
+def persistence(num):
+    per = 0
+    mul = 1
+    while num > 0:
+        # print(per, num, mul, '--------')
+        per += 1
+        mul = mul * (num % 10)
+        num = num // 10
+        # print(per, num, mul, '--------')
+        if num <= 1 and mul < 10:
+            break
+        elif not num and mul:
+            num, mul = mul, 1
+
+    return per
+print(persistence(39))
 
 
 def persistence(num):
