@@ -1,9 +1,11 @@
 from functools import reduce
 
+
 class Human:
     def __init__(self, name, age):
         self.name = name
         self.age = age
+
 
 class Cinderella(Human):
     __count = 0
@@ -31,27 +33,59 @@ class Prince(Human):
             if self.leg_size == cin.leg_size:
                 return cin
 
-c = Cinderella('Женя',20,45)
-c2 = Cinderella('Рунь',42,37)
-p = Prince('Ваня',30,45)
-cin = [c,c2]
-print(p.find(cin))
-print(Cinderella.count())
+
+
 
 
 class Notebook:
-    __notes = []
+
+
+    @classmethod
+    def notes_decorator(cls, func):
+        def inner(*args, **kwargs):
+            note = open('notes.txt', '+')
+            eval(f"cls.{func.__name__}(note, *args, **kwargs)")
+            note.close()
+
+            return inner
+
+    @classmethod
+    @notes_decorator
+    def append(cls, note, value):
+        note.writelines([line + '\n' for line in value])
+
+    @classmethod
+    def to_dict(cls, obj):
+        temp_dict = {}
+        for attr in dir(obj):
+            print(attr)
+            if not attr.startswith("__"):
+                temp_dict[attr] = getattr(obj, attr)
+            temp_dict['type'] = type(obj)
+        return temp_dict
+
+    @classmethod
+    def to_obj(cls, dit):
+        if dit['type'] == type(Human):
+            return Human(dit['name'], dit['age'])
+        elif dit['type'] == type(Cinderella):
+            return Cinderella(dit['name'], dit['age'], dit['leg_size'])
+        elif dit['type'] == type(Prince):
+            return Prince(dit['name'], dit['age'], dit['leg_size'])
+
+
 
 
     @classmethod
     def create(cls):
         name = input("Введите название товара: ")
         cost = int(input("Введите цену товара: "))
-        cls.__notes.append({'name': name, "cost": cost})
+        cls.append({'name': name, "cost": cost})
 
     @classmethod
-    def all_notes(cls):
-        for note in cls.__notes:
+    @notes_decorator
+    def all_notes(cls, notes):
+        for note in notes:
             print(f"{note['name']}\n Цена: {note['cost']}")
 
     @classmethod
@@ -72,6 +106,7 @@ class Notebook:
         for note in cls.__notes:
             if temp == note['name']:
                 return f"{note['name']}\nЦена: {note['cost']}"
+
 
 while True:
     print("1. Создать запись")
