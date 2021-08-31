@@ -16,7 +16,7 @@ class Rectangle:
     def __mul__(self, other):
         return self.S * other.S
 
-    def __div__(self, other):
+    def __truediv__(self, other):
         return self.S / other.S
 
     def __eq__(self, other):
@@ -48,7 +48,7 @@ print(q - s)
 q = Rectangle(2, 2)
 s = Square(2)
 print(q == s)
-
+print(q/s)
 
 class Transport:
     def __init__(self, time, cost):
