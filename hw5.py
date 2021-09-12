@@ -63,7 +63,7 @@ class Notebook:
                 temp_dict[attr] = getattr(obj, attr)
             temp_dict['type'] = type(obj)
         return temp_dict
-
+ 
     @classmethod
     def to_obj(cls, dit):
         if dit['type'] == type(Human):
